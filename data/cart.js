@@ -1,13 +1,13 @@
-﻿export let cart = JSON.parse(localStorage.getItem('cart')) || [
+﻿export let cart = JSON.parse(localStorage.getItem("cart")) || [
   {
-    productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+    productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     quantity: 2,
   },
-  { productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d', quantity: 1 },
+  { productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d", quantity: 1 },
 ];
 
 export function saveToStorage() {
-  localStorage.setItem('cart', JSON.stringify(cart));
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 export function addToCart(productId) {
@@ -48,4 +48,24 @@ export function removeFromCart(productId) {
   cart = newCart;
 
   saveToStorage();
+}
+
+export function calculateCartQuantity(elementClass, elementDisplay) {
+  let cartQuantity = 0;
+
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+  document.querySelector(
+    elementClass
+  ).innerHTML = `${cartQuantity}${elementDisplay}`;
+
+  if (cartQuantity === 0 && elementClass === ".js-cart-quantity") {
+    document.querySelector(elementClass).innerHTML = "";
+  } else if (
+    elementClass === ".js-item-counter" &&
+    (cartQuantity % 10 !== 1 || cartQuantity === 11)
+  ) {
+    document.querySelector(elementClass).innerHTML += "s";
+  }
 }
