@@ -101,8 +101,8 @@ export function renderOrderSummary() {
 			const { productId } = link.dataset;
 
 			const container = document.querySelector(`.js-cart-item-container-${productId}`);
-
 			container.classList.add('is-editing-quantity');
+
 			renderCheckoutHeader();
 		});
 	});
@@ -118,14 +118,13 @@ export function renderOrderSummary() {
 				alert('Quantity must be at least 0 and less than 1000');
 				return;
 			}
-			updateQuantity(productId, newQuantity);
-
 			const container = document.querySelector(`.js-cart-item-container-${productId}`);
 			container.classList.remove('is-editing-quantity');
+			updateQuantity(productId, newQuantity);
 
-			const quantityLabel = document.querySelector(`js-quantity-label-${productId}`);
-			quantityLabel.innerHTML = newQuantity;
 			renderCheckoutHeader();
+			renderOrderSummary();
+			renderPaymentSummary();
 		});
 	});
 
