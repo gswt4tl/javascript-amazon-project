@@ -29,7 +29,7 @@ export function renderOrderSummary() {
                 <div class="product-name js-product-name-${matchingProduct.id}">
                     ${matchingProduct.name}
                 </div>
-                <div class="product-price">$${formatCurrency(matchingProduct.priceCents)}</div>
+                <div class="product-price">${matchingProduct.getPrice()}</div>
                 <div class="product-quantity js-product-quantity-${matchingProduct.id}">
                   <span>Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">${
 			cartItem.quantity

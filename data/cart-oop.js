@@ -142,8 +142,4 @@ const cart = Cart('cart-oop');
 const businessCart = Cart('cart-business');
 
 cart.loadFromStorage();
-
 businessCart.loadFromStorage();
-
-console.log(cart);
-console.log(businessCart);
