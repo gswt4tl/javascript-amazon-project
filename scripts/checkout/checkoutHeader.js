@@ -7,6 +7,8 @@ export function renderCheckoutHeader() {
 		cartQuantity += cartItem.quantity;
 	});
 
+	const checkoutMessage = cartQuantity % 10 === 1 && cartQuantity !== 11 ? 'item' : 'items';
+
 	const checkoutHeaderHTML = `
     <div class="header-content">
       <div class="checkout-header-left-section">
@@ -17,7 +19,7 @@ export function renderCheckoutHeader() {
       </div>
       <div class="checkout-header-middle-section">
         Checkout (<a class="return-to-home-link"
-          href="amazon.html">${cartQuantity} items</a>)
+          href="amazon.html">${cartQuantity} ${checkoutMessage}</a>)
       </div>
       <div class="checkout-header-right-section">
         <img src="images/icons/checkout-lock-icon.png">

@@ -43,7 +43,7 @@
 
 				<a class="cart-link header-link" href="checkout.html">
 					<img class="cart-icon" src="images/icons/cart-icon.png" />
-					<div class="cart-quantity">3</div>
+					<div class="cart-quantity js-cart-quantity"></div>
 					<div class="cart-text">Cart</div>
 				</a>
 			</div>
@@ -53,11 +53,6 @@
 			<div class="order-tracking js-order-tracking"></div>
 		</div>
 
-		<script>
-			const url = new URL(window.location.href);
-			console.log(url.searchParams.get('orderId'));
-			console.log(url.searchParams.get('productId'));
-		</script>
 		<script type="module" src="scripts/tracking.js"></script>
 	</body>
 </html>

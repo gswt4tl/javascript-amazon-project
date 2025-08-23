@@ -1,11 +1,14 @@
-﻿import { getProduct, loadProductsFetch } from '../data/products.js';
+﻿import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import { getProduct, loadProductsFetch } from '../data/products.js';
 import { orders } from '../data/orders.js';
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import formatCurrency from './utils/money.js';
-import { addToCartOne } from '../data/cart.js';
+import { formatCurrency } from './utils/money.js';
+import { addToCartOne, loadCartFetch, updateCartQuantity } from '../data/cart.js';
 
 async function loadPage() {
 	await loadProductsFetch();
+	await loadCartFetch();
+
+	updateCartQuantity();
 
 	let ordersHTML = '';
 
@@ -80,6 +83,8 @@ async function loadPage() {
 	document.querySelectorAll('.js-buy-again').forEach(button => {
 		button.addEventListener('click', () => {
 			addToCartOne(button.dataset.productId);
+			updateCartQuantity();
+
 			button.innerHTML = 'Added';
 			setTimeout(() => {
 				button.innerHTML = `

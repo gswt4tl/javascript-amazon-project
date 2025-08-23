@@ -1,9 +1,13 @@
-﻿import { getProduct, loadProductsFetch } from '../data/products.js';
+﻿import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import { getProduct, loadProductsFetch } from '../data/products.js';
+import { loadCartFetch, updateCartQuantity } from '../data/cart.js';
 import { getOrder } from '../data/orders.js';
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
 async function loadPage() {
 	await loadProductsFetch();
+	await loadCartFetch();
+
+	updateCartQuantity();
 
 	const url = new URL(window.location.href);
 	const orderId = url.searchParams.get('orderId');
@@ -22,13 +26,20 @@ async function loadPage() {
 	const currentTime = dayjs();
 	const orderTime = dayjs(order.orderTime);
 	const deliveryTime = dayjs(productDetails.estimatedDeliveryTime);
-	const percentage = ((currentTime - orderTime) / (deliveryTime - orderTime)) * 10000;
-	// схуято 100 не работает но работает 10000
+	const percentage = ((currentTime - orderTime) / (deliveryTime - orderTime)) * 100;
+	console.log(currentTime);
+	console.log(orderTime);
+	console.log(deliveryTime);
+	console.log(percentage);
+
+	const deliveredMessage = currentTime < deliveryTime ? 'Arriving on' : 'Delivered on';
 
 	const trackingHTML = `
       <a class="back-to-orders-link link-primary" href="orders.html"> View all orders </a>
 
-      <div class="delivery-date">Arriving on ${dayjs(productDetails.estimatedDeliveryTime).format('dddd, MMMM D')}</div>
+      <div class="delivery-date">${deliveredMessage} ${dayjs(productDetails.estimatedDeliveryTime).format(
+		'dddd, MMMM D'
+	)}</div>
       <div class="product-info">${product.name}</div>
 
       <div class="product-info">Quantity: ${productDetails.quantity}</div>
