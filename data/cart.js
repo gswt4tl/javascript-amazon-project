@@ -152,3 +152,8 @@ export async function loadCartFetch() {
 	console.log(text);
 	return text;
 }
+
+export function resetCart() {
+	cart = [];
+	saveToStorage();
+}
