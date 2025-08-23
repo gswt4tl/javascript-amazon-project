@@ -19,6 +19,12 @@ async function loadPage() {
 		}
 	});
 
+	const currentTime = dayjs();
+	const orderTime = dayjs(order.orderTime);
+	const deliveryTime = dayjs(productDetails.estimatedDeliveryTime);
+	const percentage = ((currentTime - orderTime) / (deliveryTime - orderTime)) * 10000;
+	// схуято 100 не работает но работает 10000
+
 	const trackingHTML = `
       <a class="back-to-orders-link link-primary" href="orders.html"> View all orders </a>
 
@@ -30,13 +36,13 @@ async function loadPage() {
       <img class="product-image" src=${product.image} />
 
       <div class="progress-labels-container">
-        <div class="progress-label">Preparing</div>
-        <div class="progress-label current-status">Shipped</div>
-        <div class="progress-label">Delivered</div>
+        <div class="progress-label ${percentage < 50 ? 'current-status' : ''}">Preparing</div>
+        <div class="progress-label ${percentage >= 50 && percentage < 100 ? 'current-status' : ''}">Shipped</div>
+        <div class="progress-label ${percentage >= 100 ? 'current-status' : ''}">Delivered</div>
       </div>
 
       <div class="progress-bar-container">
-        <div class="progress-bar"></div>
+        <div class="progress-bar" style="width: ${percentage}%;"></div>
       </div>
   `;
 
